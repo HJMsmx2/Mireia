@@ -8,4 +8,4 @@ Hacer ansible y pagina web
 - docker compose
 - docker network
 - rsync
-- Kea y configuracion 
+- Kea y configuracion (Hecho) 

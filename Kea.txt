@@ -28,7 +28,7 @@ Instalacion, Configuracion y restablecer Kea en ansible.
                }
               ]
              }
-           }
+     }
 
     notify: Reiniciar KEA
 

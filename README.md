@@ -8,4 +8,7 @@ Hacer ansible y pagina web
 - docker compose
 - docker network
 - rsync
+- DNS 
+- Apache 
+- NextCloud
 - Kea y configuracion (Hecho) 

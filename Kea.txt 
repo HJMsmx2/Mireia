@@ -1,0 +1,40 @@
+Instalacion, Configuracion y restablecer Kea en ansible. 
+
+    - name: Instal·lar el servidor DHCP KEA
+      ansible.builtin.apt:
+        name: kea-dhcp4-server
+        state: present
+        update_cache: yes
+
+    - name: Configurar el servidor DHCP KEA
+      ansible.builtin.copy:
+        dest: /etc/kea/kea-dhcp4.conf
+        content: |
+    {
+            "Dhcp4": {
+              "interfaces-config": {
+                "interfaces": [ "interfaces" ]
+              },
+              "subnet4": [
+                {
+                  "subnet": "x.x.x.x/x",
+                  "pools": [
+                    { "pool": "x.x.x.x - x.x.x.x" }
+                  ],
+                  "option-data": [
+                    { "name": "routers", "data": "x.x.x.x" },
+                    { "name": "domain-name-servers", "data": "x.x.x.x" }
+                 ]
+               }
+              ]
+             }
+           }
+
+    notify: Reiniciar KEA
+
+  handlers:
+    - name: Reiniciar KEA
+      ansible.builtin.systemd:
+        name: kea-dhcp4-server
+        state: restarted
+

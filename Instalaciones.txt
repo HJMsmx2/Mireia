@@ -1,13 +1,12 @@
-- sshpass
-
+- sshpass:
   - name: Instalar sshpass
       apt:
         name: sshpass
         state: present
         update_cache: yes
 
-- ansible
 
+- ansible:
  - name: Instalar el repositorio de Ansible (si no está agregado)
       apt_repository:
         repo: 'deb http://ppa.launchpad.net/ansible/ansible/ubuntu {{ ansible_distribution_release | lower }} main'
@@ -19,22 +18,21 @@
         name: ansible
         state: present
 
-- samba
-
+- samba:
 - name: Instalar Samba
       apt:
         name: samba
         state: present
 
-- squid
 
+- squid:
  - name: Instalar Squid
       apt:
         name: squid
         state: present
 
-- crontab
 
+- crontab:
  - name: Instalar el paquete cron
       apt:
         name: cron
@@ -46,8 +44,7 @@
         state: started
         enabled: yes
 
-- docker compose
-
+- docker compose:
  - name: Instalar dependencias necesarias para Docker
       apt:
         name: docker.io 
@@ -76,20 +73,46 @@
         mode: 'u+x'
 
 
-- docker network
+- rsync:
+ - name: Instalar rsync
+      apt:
+        name: rsync
+        state: present
+
+- Bind9: 
+   - name: Instalar BIND9
+      apt:
+        name: bind9
+        state: present
+
+    - name: Instalar herramientas adicionales de BIND9
+      apt:
+        name:
+          - bind9utils
+          - dnsutils
+        state: present
+
+    - name: Iniciar y habilitar el servicio BIND9
+      service:
+        name: bind9
+        state: started
+        enabled: yes
 
 
+- Apache:
+   - name: Instalar Apache2
+     apt:
+       name: apache2
+       state: present
 
-- rsync
+    - name: Iniciar y habilitar el servicio Apache2
+      service:
+        name: apache2
+        state: started
+        enabled: yes
 
-- Bind9 
-
-- Apache
-
-- NextCloud
 
 - Kea 
-
   - name: Instal·lar el servidor DHCP KEA
       ansible.builtin.apt:
         name: kea-dhcp4-server

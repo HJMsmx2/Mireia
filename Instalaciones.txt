@@ -1,0 +1,97 @@
+- sshpass
+
+  - name: Instalar sshpass
+      apt:
+        name: sshpass
+        state: present
+        update_cache: yes
+
+- ansible
+
+ - name: Instalar el repositorio de Ansible (si no está agregado)
+      apt_repository:
+        repo: 'deb http://ppa.launchpad.net/ansible/ansible/ubuntu {{ ansible_distribution_release | lower }} main'
+        state: present
+        update_cache: yes
+
+    - name: Instalar Ansible
+      apt:
+        name: ansible
+        state: present
+
+- samba
+
+- name: Instalar Samba
+      apt:
+        name: samba
+        state: present
+
+- squid
+
+ - name: Instalar Squid
+      apt:
+        name: squid
+        state: present
+
+- crontab
+
+ - name: Instalar el paquete cron
+      apt:
+        name: cron
+        state: present
+
+    - name: Asegurar que el servicio cron esté en ejecución
+      service:
+        name: cron
+        state: started
+        enabled: yes
+
+- docker compose
+
+ - name: Instalar dependencias necesarias para Docker
+      apt:
+        name: docker.io 
+        state: present 
+
+    - name: Instalar Docker
+      apt:
+        name: docker-ce
+        state: present
+
+    - name: Iniciar y habilitar el servicio Docker
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Descargar la última versión de Docker Compose
+      shell: >
+        curl -L https://github.com/docker/compose/releases/download/$(curl -s https://api.github.com/repos/docker/compose/releases/latest | jq -r .tag_name)/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
+      args:
+        creates: /usr/local/bin/docker-compose
+
+    - name: Dar permisos de ejecución a Docker Compose
+      file:
+        path: /usr/local/bin/docker-compose
+        mode: 'u+x'
+
+
+- docker network
+
+
+
+- rsync
+
+- Bind9 
+
+- Apache
+
+- NextCloud
+
+- Kea 
+
+  - name: Instal·lar el servidor DHCP KEA
+      ansible.builtin.apt:
+        name: kea-dhcp4-server
+        state: present
+        update_cache: yes

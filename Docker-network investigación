@@ -1,8 +1,3 @@
----
-- name: Crear una red Docker personalizada
-  hosts: all
-  become: yes  # para ejecutar como root
-  tasks:
     - name: Crear una red Docker de tipo bridge
       docker_network:
         name: mi_red_customizada

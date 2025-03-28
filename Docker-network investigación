@@ -1,1 +1,19 @@
+---
+- name: Crear una red Docker personalizada
+  hosts: all
+  become: yes  # para ejecutar como root
+  tasks:
+    - name: Crear una red Docker de tipo bridge
+      docker_network:
+        name: mi_red_customizada
+        state: present
+        driver: bridge  # Puedes elegir otros controladores como 'overlay' si usas Docker Swarm
+
+    - name: Verificar que la red Docker fue creada
+      command: docker network ls
+      register: docker_network_list
+
+    - name: Mostrar redes Docker
+      debug:
+        msg: "{{ docker_network_list.stdout }}"
 

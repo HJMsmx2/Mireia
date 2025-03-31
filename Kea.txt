@@ -8,6 +8,7 @@ Instalacion, Configuracion y restablecer Kea en ansible.
 
     - name: Configurar el servidor DHCP KEA
       ansible.builtin.copy:
+        src: kea 
         dest: /etc/kea/kea-dhcp4.conf
         content: |
     {

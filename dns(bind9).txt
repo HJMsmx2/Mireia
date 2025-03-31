@@ -1,0 +1,159 @@
+Instalacion, Configuracion y restablecer BIND9 en ansible. 
+
+    - name: Instalar BIND9
+      apt:
+        name: bind9
+        state: present
+
+    - name: Instalar herramientas adicionales de BIND9
+      apt:
+        name:
+          - bind9utils
+          - dnsutils
+        state: present
+
+    - name: Crear el directorio en /etc/bind
+          file:
+            path: /etc/bind/mi_carpeta  # Ruta donde deseas crear la carpeta
+            state: directory  # Especifica que es un directorio
+            owner: root  # Propietario de la carpeta
+            group: root  # Grupo de la carpeta
+            mode: '0755'  # Permisos de la carpeta 
+
+   - name: Copiar archivo de configuración named.conf.options 
+      copy:
+        src:  # Ruta al archivo en tu máquina local
+        dest: /etc/bind/mi_carpeta/named.conf.options  # Ruta en el servidor
+        owner: root
+        group: root
+        mode: '0644'
+
+[lo que tiene que haber en el archivo:]
+  acl internal-network {
+  ip de la red 
+  };
+  options {
+          directory "/var/cache/bind";
+          allow-query { localhost; internal-network; };
+          allow-transfer { localhost; };
+          forwarders { ip del router; };
+          recursion yes;
+          dnssec-validation auto; 
+          listen-on-v6 { any; };
+  };
+
+    # 3. Copiar los archivos de zona (por ejemplo, db.example.com)
+    - name: Copiar archivo de db.local
+      copy:
+        src: configuracion local db  # Archivo de zona, adaptado a tu dominio
+        dest: /etc/bind/mi_carpeta/db.local  # Ruta en el servidor
+        owner: root
+        group: root
+        mode: '0644'
+
+[La configuracion que tiene que tener el db.local]
+      $TTL 604800
+      @ IN SOA primary.(nombre).local. root.primary.(nombre).local. (
+                                            2022072651 ; Serial 
+                                            3600 ; Refresh 
+                                            1800 ; Retry 
+                                            604800 ) ; Negative Cache TTL 
+      ;Name Server Information 
+      @    IN  NS   primary.(nombre).local.
+
+      ;IP address of Your domain Name Server (DNS) 
+      primary IN A  192.168.x.x ( IP de la maquina) 
+      server IN A  192.168.x.x  (IP de la maquina ) 
+      
+      ;Mail Server MX (Mail exchanger) Record 
+      (nombre).local IN MX 10 mail.(nombre).local.
+ 
+      ;A Record for Host names 
+      www IN A 192.168.x.x ( IP de la maquina)
+      mail IN A 192.168.x.x 
+
+      ;CNAME Record 
+      pop3 IN CNAME server
+      smtp IN CNAME server 
+
+    - name: Configuracion db.ip 
+      copy: 
+        src: configuracion db.ip 
+        dest: /etc/bind/mi_carpeta/db.ip ( al reves) 
+        owner: root
+        group: root
+        mode: '0644'
+
+(Configuracion del archivo) 
+
+     $TTL 604800
+      @ IN SOA (nombre).local. root.(nombre).local. (
+                                            2022072752 ; Serial 
+                                            3600 ; Refresh 
+                                            1800 ; Retry 
+                                            604800  ; Expire
+                                            86400 ; Minimum TTL 
+      )
+
+      ;Your Name Server Info
+      @    IN  NS   primary.(nombre).local.
+      primary IN A  192.168.x.x ( IP de la maquina) 
+      server IN A  192.168.x.x  (IP de la maquina ) 
+      
+      ;Reverse Lookup for Your DNS Server 
+      (bit del host) IN PTR  primary.(nombre).local.
+ 
+      ;PTR Record IP address to HostName
+      (bit del host) IN PTR  www.(nombre).local.
+      (bit del host) IN PTR  mail.(nombre).local.
+
+
+    - name: Configuracion named
+      copy: 
+        src: configuracion named 
+        dest: /etc/default/named.conf.local 
+        owner: root
+        group: root
+        mode: '0644'
+      
+      (Configuracion de el named) 
+        #
+        # run resolvo conf
+        RESOLVCONF=no 
+
+        # startup options for the server 
+        OPTIONS="-u bind -4"
+
+    - name: Configuracion zonas  
+      copy: 
+        src: configuracion named.conf.local
+        dest: /etc/bind/named.conf.local ( 
+        owner: root
+        group: root
+        mode: '0644'
+
+(configuracion para crear la zona) 
+
+//
+// Do any local configuration here 
+//
+
+// Consider adding the 1918 zones here, if they are not used in your 
+// organization
+// include "/etc/bind/zones.rfc1918";
+
+zone "(nombre).local" IN {
+          type master;
+          file "/etc/bind/mi_carpeta/db.(nombre).local";
+};
+zone "(ip al reves sin el host).in-addr.arpa"{
+          type master; 
+          file "/etc/bind/mi_carpeta/db.(ip al reves sin host)";
+};
+    
+
+# 4. Reiniciar el servicio de BIND9 para que los cambios tengan efecto
+    - name: Reiniciar servicio bind9
+      service:
+        name: bind9
+        state: restarted

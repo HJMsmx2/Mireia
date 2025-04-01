@@ -24,7 +24,6 @@
 
      # And finally deny all other access to this proxy 
      http_access deny all 
-     deny_info ERR_ACCESS_DENIED /var/www/html/denegat.html 
 
    notify: Reiniciar squid
  

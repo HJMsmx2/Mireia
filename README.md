@@ -3,12 +3,13 @@ Hacer ansible y pagina web (http://hjm.rf.gd)
 - sshpass
 - ansible
 - samba
-- squid
+- squid (Configuracion en squid.txt)
 - crontab
 - docker compose
 - docker network
 - rsync
-- DNS 
+- DNS (Configuracion en dns(bind9).txt) 
 - Apache 
 - NextCloud
-- Kea y configuracion (Hecho) 
+- Kea (Configuracion en kea.txt)
+- Netplan (Configuracion en netplan.txt) 

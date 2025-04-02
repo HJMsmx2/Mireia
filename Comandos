@@ -1,1 +1,14 @@
-  
+[Maquina ansible]
+sudo apt update 
+sudo apt install software-properties-common 
+sudo add-apt-repository ppa:ansible/ansible 
+sudo apt install ansible 
+touch kea 
+ssh-keygen
+ssh-copy-id root@ip 
+
+
+[Maquina que recibe el ansible]
+sudo passwd root 
+sudo nano /etc/ssh/sshd_config (permitir el root) 
+sudo systemctl restart ssh 

@@ -3,9 +3,12 @@ sudo apt update
 sudo apt install software-properties-common 
 sudo add-apt-repository ppa:ansible/ansible 
 sudo apt install ansible 
-touch kea 
 ssh-keygen
 ssh-copy-id root@ip 
+nano netplan 
+nano playbook.yml
+nano hosts 
+ansible-playbook -i hosts playbook.yml 
 
 
 [Maquina que recibe el ansible]

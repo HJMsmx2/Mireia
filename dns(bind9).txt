@@ -14,7 +14,7 @@ Instalacion, Configuracion y restablecer BIND9 en ansible.
 
     - name: Crear el directorio en /etc/bind
           file:
-            path: /etc/bind/mi_carpeta  # Ruta donde deseas crear la carpeta
+            path: /etc/bind/dns # Ruta donde deseas crear la carpeta
             state: directory  # Especifica que es un directorio
             owner: root  # Propietario de la carpeta
             group: root  # Grupo de la carpeta
@@ -22,8 +22,8 @@ Instalacion, Configuracion y restablecer BIND9 en ansible.
 
    - name: Copiar archivo de configuración named.conf.options 
       copy:
-        src:  # Ruta al archivo en tu máquina local
-        dest: /etc/bind/mi_carpeta/named.conf.options  # Ruta en el servidor
+        src:  namedconf# Ruta al archivo en tu máquina local
+        dest: /etc/bind/dns/named.conf.options  # Ruta en el servidor
         owner: root
         group: root
         mode: '0644'
@@ -36,7 +36,7 @@ Instalacion, Configuracion y restablecer BIND9 en ansible.
           directory "/var/cache/bind";
           allow-query { localhost; internal-network; };
           allow-transfer { localhost; };
-          forwarders { ip del router; };
+          forwarders { 192.168.236.1; };
           recursion yes;
           dnssec-validation auto; 
           listen-on-v6 { any; };
@@ -46,31 +46,31 @@ Instalacion, Configuracion y restablecer BIND9 en ansible.
     - name: Copiar archivo de db.local
       copy:
         src: configuracion local db  # Archivo de zona, adaptado a tu dominio
-        dest: /etc/bind/mi_carpeta/db.local  # Ruta en el servidor
+        dest: /etc/bind/dns/db.server.local  # Ruta en el servidor
         owner: root
         group: root
         mode: '0644'
 
 [La configuracion que tiene que tener el db.local]
       $TTL 604800
-      @ IN SOA primary.(nombre).local. root.primary.(nombre).local. (
+      @ IN SOA primary.server.local. root.primary.server.local. (
                                             2022072651 ; Serial 
                                             3600 ; Refresh 
                                             1800 ; Retry 
                                             604800 ) ; Negative Cache TTL 
       ;Name Server Information 
-      @    IN  NS   primary.(nombre).local.
+      @    IN  NS   primary.server.local.
 
       ;IP address of Your domain Name Server (DNS) 
-      primary IN A  192.168.x.x ( IP de la maquina) 
-      server IN A  192.168.x.x  (IP de la maquina ) 
+      primary IN A  192.168.1.2  
+      server IN A  192.168.1.2   
       
       ;Mail Server MX (Mail exchanger) Record 
-      (nombre).local IN MX 10 mail.(nombre).local.
+      server.local IN MX 10 mail.server.local.
  
       ;A Record for Host names 
-      www IN A 192.168.x.x ( IP de la maquina)
-      mail IN A 192.168.x.x 
+      www IN A 192.168.1.2
+      mail IN A 192.168.1.2 
 
       ;CNAME Record 
       pop3 IN CNAME server
@@ -78,8 +78,8 @@ Instalacion, Configuracion y restablecer BIND9 en ansible.
 
     - name: Configuracion db.ip 
       copy: 
-        src: configuracion db.ip 
-        dest: /etc/bind/mi_carpeta/db.ip ( al reves) 
+        src: dbip
+        dest: /etc/bind/dns/db.1.168.192 
         owner: root
         group: root
         mode: '0644'
@@ -87,7 +87,7 @@ Instalacion, Configuracion y restablecer BIND9 en ansible.
 (Configuracion del archivo) 
 
      $TTL 604800
-      @ IN SOA (nombre).local. root.(nombre).local. (
+      @ IN SOA server.local. root.server.local. (
                                             2022072752 ; Serial 
                                             3600 ; Refresh 
                                             1800 ; Retry 
@@ -96,16 +96,16 @@ Instalacion, Configuracion y restablecer BIND9 en ansible.
       )
 
       ;Your Name Server Info
-      @    IN  NS   primary.(nombre).local.
-      primary IN A  192.168.x.x ( IP de la maquina) 
-      server IN A  192.168.x.x  (IP de la maquina ) 
+      @    IN  NS   primary.server.local.
+      primary IN A  192.168.1.2 
+      server IN A  192.168.1.2 
       
       ;Reverse Lookup for Your DNS Server 
-      (bit del host) IN PTR  primary.(nombre).local.
+      (bit del host) IN PTR  primary.server.local.
  
       ;PTR Record IP address to HostName
-      (bit del host) IN PTR  www.(nombre).local.
-      (bit del host) IN PTR  mail.(nombre).local.
+      (bit del host) IN PTR  www.server.local.
+      (bit del host) IN PTR  mail.server.local.
 
 
     - name: Configuracion named
@@ -144,11 +144,11 @@ Instalacion, Configuracion y restablecer BIND9 en ansible.
 
 zone "(nombre).local" IN {
           type master;
-          file "/etc/bind/mi_carpeta/db.(nombre).local";
+          file "/etc/bind/dns/db.server.local";
 };
-zone "(ip al reves sin el host).in-addr.arpa"{
+zone "1.168.192.in-addr.arpa"{
           type master; 
-          file "/etc/bind/mi_carpeta/db.(ip al reves sin host)";
+          file "/etc/bind/dns/db.1.168.192";
 };
     
 

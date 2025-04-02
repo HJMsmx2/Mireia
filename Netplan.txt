@@ -14,7 +14,7 @@
                   - x.x.x.x/x
                 nameservers:
                   addresses:
-                    - x.x.x.x
+                    - 192.168.236.1
 
     - name: Aplicar configuración de red
       command: netplan apply

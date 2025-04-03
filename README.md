@@ -1,5 +1,6 @@
 #Mireia
 Hacer ansible y pagina web (http://hjm.rf.gd) 
+- Crear usuarios 
 - sshpass
 - ansible
 - samba

@@ -126,7 +126,7 @@ Instalacion, Configuracion y restablecer BIND9 en ansible.
 
     - name: Configuracion zonas  
       copy: 
-        src: configuracion named.conf.local
+        src: namedlocal
         dest: /etc/bind/named.conf.local ( 
         owner: root
         group: root

@@ -28,3 +28,6 @@ ansible-playbook -i hosts playbook2.yml
 sudo passwd root 
 sudo nano /etc/ssh/sshd_config (permitir el root) 
 sudo systemctl restart ssh 
+sudo systemctl status ssh 
+sudo systemctl status kea 
+sudo systemctl status bind9 

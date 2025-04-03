@@ -9,6 +9,19 @@ nano netplan
 nano playbook.yml
 nano hosts 
 ansible-playbook -i hosts playbook.yml 
+cp playbook.yml playbook1.yml 
+nano playbook2.yml 
+nano kea 
+ansible-playbook -i hosts playbook1.yml 
+cp playbook.yml playbook2.yml 
+nano playbook2.yml 
+nano namedconf
+nano localdb 
+nano dbip 
+nano confnamed
+nano namedlocal
+ansible-playbook -i hosts playbook2.yml 
+
 
 
 [Maquina que recibe el ansible]

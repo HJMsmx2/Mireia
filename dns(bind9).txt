@@ -30,7 +30,7 @@ Instalacion, Configuracion y restablecer BIND9 en ansible.
 
 [lo que tiene que haber en el archivo:]
   acl internal-network {
-  ip de la red 
+ 192.168.1.0/24 
   };
   options {
           directory "/var/cache/bind";

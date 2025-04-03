@@ -45,7 +45,7 @@ Instalacion, Configuracion y restablecer BIND9 en ansible.
     # 3. Copiar los archivos de zona (por ejemplo, db.example.com)
     - name: Copiar archivo de db.local
       copy:
-        src: configuracion local db  # Archivo de zona, adaptado a tu dominio
+        src: localdb  # Archivo de zona, adaptado a tu dominio
         dest: /etc/bind/dns/db.server.local  # Ruta en el servidor
         owner: root
         group: root
@@ -110,7 +110,7 @@ Instalacion, Configuracion y restablecer BIND9 en ansible.
 
     - name: Configuracion named
       copy: 
-        src: configuracion named 
+        src: confnamed 
         dest: /etc/default/named.conf.local 
         owner: root
         group: root

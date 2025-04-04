@@ -23,6 +23,7 @@ nano namedlocal
 ansible-playbook -i hosts playbook2.yml 
 cp playbook.yml playbook3.yml 
 nano playbook3.yml 
+ansible-playbook -i hosts playbook3.yml 
 
 
 

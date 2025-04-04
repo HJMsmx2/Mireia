@@ -1,0 +1,2 @@
+[prueba]
+prueba1 ansible_host=root@ip 

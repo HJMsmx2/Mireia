@@ -1,7 +1,7 @@
 CONFIGURACION DE SMB.CONF: 
 
 [global]
-   workgruop = WORKGROUP
+   workgroup = WORKGROUP
    server string = Samba Server 
    security = user 
    log file = /var/log/samba/log.%m
@@ -148,4 +148,4 @@ ANSIBLE:
       systemd:
         name: smbd
         state: restarted
-        enable: yes
+

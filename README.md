@@ -9,8 +9,8 @@ Hacer ansible y pagina web (http://hjm.rf.gd)
 - docker compose
 - docker network
 - rsync
-- DNS (Configuracion en dns(bind9).txt)  (Hecho) 
+- DNS (Configuracion en dns(bind9).txt)   (Hecho) 
 - Apache 
 - NextCloud
-- Kea (Configuracion en kea.txt) (Hecho)
-- Netplan (Configuracion en netplan.txt) (Hecho)  
+- Kea (Configuracion en kea.txt)  (Hecho)
+- Netplan (Configuracion en netplan.txt)  (Hecho)  

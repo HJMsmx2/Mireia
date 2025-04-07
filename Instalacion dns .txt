@@ -11,12 +11,12 @@ Instalacion, Configuracion y restablecer BIND9 en ansible.
           - dnsutils
         state: present
     - name: Crear el directorio en /etc/bind
-          file:
-            path: /etc/bind/dns 
-            state: directory  
-            owner: root  
-            group: root  
-            mode: '0755'  
+      file:
+        path: /etc/bind/dns 
+        state: directory  
+        owner: root  
+        group: root  
+        mode: '0755'  
     - name: Copiar archivo de configuración named.conf.options 
       copy:
         src:  namedcon
@@ -52,7 +52,6 @@ Instalacion, Configuracion y restablecer BIND9 en ansible.
         owner: root
         group: root
         mode: '0644'
-# 4. Reiniciar el servicio de BIND9 para que los cambios tengan efecto
     - name: Reiniciar servicio bind9
       service:
         name: bind9

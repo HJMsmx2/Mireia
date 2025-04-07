@@ -1,5 +1,0 @@
-- name: Preparar el server 
-  hosts: server
-  user: root 
-  tasks:
-  

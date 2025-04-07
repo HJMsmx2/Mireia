@@ -37,3 +37,4 @@ sudo systemctl restart ssh
 sudo systemctl status ssh 
 sudo systemctl status kea 
 sudo systemctl status bind9 
+sudo systemctl status smbd 

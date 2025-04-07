@@ -1,9 +1,9 @@
 #Mireia
 Hacer ansible y pagina web (http://hjm.rf.gd) 
-- Crear usuarios 
+- Crear usuarios (Hecho)
 - sshpass
 - ansible
-- samba
+- samba (Hecho)
 - squid (Configuracion en squid.txt)
 - crontab
 - docker compose

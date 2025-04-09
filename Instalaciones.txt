@@ -9,7 +9,7 @@
 - ansible:
  - name: Instalar el repositorio de Ansible (si no está agregado)
    apt_repository:
-     repo: 'deb http://ppa.launchpad.net/ansible/ansible/ubuntu {{ ansible_distribution_release | lower }} main'
+     repo: 'ppa:ansible/ansible'
      state: present
      update_cache: yes
 

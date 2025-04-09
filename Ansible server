@@ -168,7 +168,7 @@
        update_cache: yes
    - name: Instalar repositorio Ansible 
      apt_repository:
-       repo: 'deb http://ppa.launchpad.net/ansible/ansible/ubuntu {{ ansible_distribution_release | lower }} main'
+       repo: 'ppa:ansible/ansible'
        state: present 
        update_cache: yes
    - name: Instalar Ansible 
@@ -183,19 +183,10 @@
      apt:
        name: cron 
        state: present 
-   - name: Ejecutar cron 
-     service:
-       name: cron
-       state: started
-       enable: yes
-   - name: Instalar dependecias para Docker
+   - name: Instalar Docker
      apt:
        name: docker.io
        state: present
-   - name: Instalar docker  
-     apt: 
-       name: docker-ce 
-       state: present 
    - name: Instalar y habilitar docker
      service: 
        name: docker

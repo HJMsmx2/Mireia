@@ -31,22 +31,11 @@
         name: cron
         state: present
 
-    - name: Asegurar que el servicio cron esté en ejecución
-      service:
-        name: cron
-        state: started
-        enabled: yes
-
 - docker compose:
- - name: Instalar dependencias necesarias para Docker
+ - name: Instalar Docker
       apt:
         name: docker.io 
         state: present 
-
-    - name: Instalar Docker
-      apt:
-        name: docker-ce
-        state: present
 
     - name: Iniciar y habilitar el servicio Docker
       service:

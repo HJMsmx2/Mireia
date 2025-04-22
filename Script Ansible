@@ -16,4 +16,5 @@ PLAYBOOK=(
 for PLAYBOOK in "${PLAYBOOK[@]}"; do
     echo "Ejecutando $PLAYBOOK..."
     ansible-playbook -i "$INVENTORY" "$DIR/$PLAYBOOK"
+
 done

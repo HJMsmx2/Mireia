@@ -1,4 +1,4 @@
-Instalacion, Configuracion y restablecer Kea en ansible. 
+Instalacion, Configuracion, restablecer Kea en ansible y activacion de la ip forwarding. 
 
     - name: Instal·lar el servidor DHCP KEA
       ansible.builtin.apt:

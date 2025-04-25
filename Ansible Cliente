@@ -34,5 +34,23 @@ Contenido archivo:
     - name: Instalar LibreOffice
       apt:
         name: libreoffice
+- name: Instalaciones
+  hosts: cliente
+  user: root
+  tasks:
+    - name: Actualizar la lista de paquetes
+      apt:
+        update_cache: yes
+
+    - name: Instalar LibreOffice
+      apt:
+        name: libreoffice
+        state: present
+
+    - name: Crear carpeta
+      file:
+        path: /home/usuario/Descargas/usuario
+        state: directory
+        mode: '0755'
         state: present
 --------------------------------------------

@@ -78,7 +78,7 @@ $TTL 604800
 // organization
 // include "/etc/bind/zones.rfc1918";
 
-zone "(nombre).local" IN {
+zone "server.local" IN {
           type master;
           file "/etc/bind/dns/db.server.local";
 };

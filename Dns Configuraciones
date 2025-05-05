@@ -55,11 +55,11 @@ $TTL 604800
       server IN A  192.168.1.2 
       
       ;Reverse Lookup for Your DNS Server 
-      (bit del host) IN PTR  primary.server.local.
+      2 IN PTR  primary.server.local.
  
       ;PTR Record IP address to HostName
-      (bit del host) IN PTR  www.server.local.
-      (bit del host) IN PTR  mail.server.local.
+      2 IN PTR  www.server.local.
+      2 IN PTR  mail.server.local.
 
 - (default) named.conf.local: 
         #
